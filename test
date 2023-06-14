@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+  <script>
+    // Get the canvas element
+    const canvas = document.getElementById("gameCanvas");
+    const context = canvas.getContext("2d");
+
+    // Player character
+    const playerSize = 50;
+    let playerX = canvas.width / 2 - playerSize / 2;
+    let playerY = canvas.height - playerSize - 10;
+    const playerSpeed = 5;
+
+    function drawPlayer() {
+      context.fillStyle = "white";
+      context.fillRect(playerX, playerY, playerSize, playerSize);
+    }
+
+    // Game loop
+    function gameLoop() {
+      // Clear the canvas
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Move the player
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowLeft" && playerX > 0) {
+          playerX -= playerSpeed;
+        }
+        if (event.key === "ArrowRight" && playerX < canvas.width - playerSize) {
+          playerX += playerSpeed;
+        }
+        if (event.key === "ArrowUp" && playerY > 0) {
+          playerY -= playerSpeed;
+        }
+        if (event.key === "ArrowDown" && playerY < canvas.height - playerSize) {
+          playerY += playerSpeed;
+        }
+      });
+
+      // Draw the player
+      drawPlayer();
+
+      // Request the next animation frame
+      requestAnimationFrame(gameLoop);
+    }
+
+    // Start the game loop
+    gameLoop();
+  </script>
+</body>
+</html>
